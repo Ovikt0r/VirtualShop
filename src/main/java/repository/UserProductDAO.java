@@ -9,13 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 @Slf4j
-@Setter
 @Getter
+@Setter
 public class UserProductDAO {
     private static final Scanner scanner = new Scanner(System.in);
-    private ArrayList<User> users = new ArrayList<>();
-    private ArrayList<Product> products = new ArrayList<>();
-    private PurchaseResultDAO purchaseResultDAO = new PurchaseResultDAO();
+    public ArrayList<User> users = new ArrayList<>();
+    public ArrayList<Product> products = new ArrayList<>();
+    public PurchaseResultDAO purchaseResultDAO = new PurchaseResultDAO();
 
 
     public void addUserToList(User user) {
@@ -36,7 +36,12 @@ public class UserProductDAO {
             log.info("Enter id of the use who wants to buy: ");
             scanner.hasNextInt();
         }
-        return userArrayList.get(scanner.nextInt());
+        int id = scanner.nextInt();
+        if(id >=0 && id < userArrayList.size()+2) {
+            return userArrayList.get(id - 1);
+        }
+        else log.info("Enter a right id !");
+        return null;
     }
 
     public Product getProductFromList(ArrayList<Product> productArrayList) {
@@ -46,8 +51,12 @@ public class UserProductDAO {
             log.info("Enter id of use who wants to buy: ");
             scanner.hasNextInt();
         }
-        return productArrayList.get(scanner.nextInt());
-
+        int id = scanner.nextInt();
+        if(id >=0 && id < productArrayList.size()+2) {
+            return productArrayList.get(id - 1);
+        }
+        else log.info("Enter a right id !");
+        return null;
     }
 
     public void printUsers() {
@@ -67,13 +76,13 @@ public class UserProductDAO {
             scanner.next();
         }
         int id = scanner.nextInt();
-        if (id > 0 && id < users.size()) {
-            users.remove(id);
-            purchaseResultDAO.tradeMapByUserId.remove(id);
+        if (id > 0 && id < users.size()+2) {
+            users.remove(id-1);
+            purchaseResultDAO.tradeMapByUserId.remove(id-1);
             Set<Map.Entry<Integer, ArrayList<User>>> set = purchaseResultDAO.tradeMapByProductId.entrySet();
             for (Map.Entry<Integer, ArrayList<User>> it : set) {
                 ArrayList<User> usersFromMap = it.getValue();
-                usersFromMap.removeIf(u -> u.getId() == id);
+                usersFromMap.removeIf(u -> u.getId() == id-1);
             }
         }
         log.info("The user was deleted successfully!");
@@ -87,15 +96,15 @@ public class UserProductDAO {
         }
         int id = scanner.nextInt();
         if (id > 0 && id < products.size()) {
-            products.remove(id);
-            purchaseResultDAO.tradeMapByProductId.remove(id);
+            products.remove(id-1);
+            purchaseResultDAO.tradeMapByProductId.remove(id-1);
             Set<Map.Entry<Integer, ArrayList<Product>>> set = purchaseResultDAO.tradeMapByUserId.entrySet();
             for (Map.Entry<Integer, ArrayList<Product>> it : set) {
                 ArrayList<Product> productsFromMap = it.getValue();
-                productsFromMap.removeIf(p -> p.getId() == id);
+                productsFromMap.removeIf(p -> p.getId() == id-1);
             }
         }
-        log.info("The user was deleted successfully!");
+        log.info("The product was deleted successfully!");
     }
 
 }

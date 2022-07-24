@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 
 public class User {
-    static int count = 1;
-    int id = count++;
-    String firstname;
-    String lastname;
-    double money;
+    private static int count = 0;
+    private int id = ++count;
+    private String firstname;
+    private String lastname;
+    private double money;
 }
 
 

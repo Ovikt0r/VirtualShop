@@ -13,9 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @ToString
 public class Product {
-    static int count;
-    int id = count++;
-    double price;
-    String name;
+    private static int count = 0;
+    private int id = ++count;
+    private double price;
+    private String name;
 
 }

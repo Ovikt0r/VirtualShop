@@ -30,32 +30,34 @@ public class PurchaseResultDAO {
 
     public void createUserProductsMap(int id, Product product) {
 
-        ArrayList<Product> tempoProductArrayList = tradeMapByUserId.get(id);
-        tempoProductArrayList.add(product);
-        tradeMapByUserId.put(id, tempoProductArrayList);
+        ArrayList<Product> localProductArrayList = new ArrayList<>();
+        localProductArrayList.add(product);
+        tradeMapByUserId.put(id, localProductArrayList);
         log.info("Trade map by User Id was updated!");
 
     }
 
     public void createProductOwnersMap(int id, User user) {
 
-        ArrayList<User> tempoUserArrayList = tradeMapByProductId.get(id);
-        tempoUserArrayList.add(user);
-        tradeMapByProductId.put(id, tempoUserArrayList);
+        ArrayList<User> localUserArrayList = new ArrayList<>();
+        localUserArrayList.add(user);
+        tradeMapByProductId.put(id, localUserArrayList);
 
     }
 
     public void printListOfProductsByUserId() {
 
-        log.info("Enter Id : ");
+        log.info("Enter product id : ");
         while (!scanner.hasNextInt()) {
             log.info("This field can't be empty, try again");
             scanner.next();
         }
         int id = scanner.nextInt();
-        if (id > 0 && id < tradeMapByUserId.size()) {
-            log.info(tradeMapByUserId.get(id).toString());
-        } else log.info("Please enter right ID!");
+        if (id > 0 &&  tradeMapByUserId.containsKey(id)) {
+            log.info("All purchases that was done by user with " + id + " id");
+            System.out.println(tradeMapByUserId.get(id).toString());
+        }
+        else log.info("Please enter right ID!");
         scanner.next();
     }
 
@@ -66,7 +68,7 @@ public class PurchaseResultDAO {
             scanner.next();
         }
         int id = scanner.nextInt();
-        if (id > 0 && id < tradeMapByUserId.size()) {
+        if (id > 0 && tradeMapByProductId.containsKey(id)) {
             log.info(tradeMapByProductId.get(id).toString());
         } else log.info("Please enter right ID!");
         scanner.next();
