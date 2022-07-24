@@ -14,8 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 public class User {
     private static int count = 0;
     private int id = ++count;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private double money;
 }
 
